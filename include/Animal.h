@@ -20,7 +20,7 @@ public:
 	void turnHorizontally();
 protected:
 	void setLocation(int row, int col);
-	void setRandomDirections();
+	virtual void setRandomDirections();
 	const std::string _name;
 	Location _location;
 	bool _moving;

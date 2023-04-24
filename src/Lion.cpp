@@ -32,7 +32,8 @@ void Lion::step()
 		return;
 	int newColLocation = _location._col + (2 * _colDirection);
 	if (newColLocation < 0 || newColLocation > 39) {
-		_colDirection = _colDirection * -1;
+		turnHorizontally();
+		newColLocation = _location._col + (2 * _colDirection);
 	}
 	setLocation(_location._row , newColLocation);
 }

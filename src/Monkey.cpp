@@ -14,39 +14,49 @@ void Monkey::step()
         return;
     }
     if ((_stepsCounter % 5) == 0) {
-        int dir = rand() %4;
-        switch (dir)
-        {
-        case(0):
-            _rowDirection = 0;
-            _colDirection = 1;
-            break;
-        case(1):
-            _rowDirection = 0;
-            _colDirection = -1;
-            break;
-        case(2):
-            _rowDirection = 1;
-            _colDirection = 0;
-            break;
-        case(3):
-            _rowDirection = -1;
-            _colDirection = 0;
-            break;
-        default:
-            break;
-        }
+        setRandomDirections();
         _stepsNumber = rand() % 2;
     }
-    Location oldLocation = this->getLocation();
-    int newRowLocation = oldLocation._row + (_stepsNumber * _rowDirection);
-    int newColLocation = oldLocation._col + (_stepsNumber * _colDirection);
-    if (newRowLocation >= 0 && newRowLocation < 20 && newColLocation >= 0 && newColLocation < 40) {
-        this->setLocation(newRowLocation, newColLocation);
+    int newRowLocation = _location._row + (_stepsNumber * _rowDirection);
+    if (newRowLocation < 0 || newRowLocation > 19) {
+        turnVertically();
+        newRowLocation = _location._row + (_rowDirection * _stepsNumber);
     }
+    int newColLocation = _location._col + (_colDirection * _stepsNumber);
+    if (newColLocation < 0 || newColLocation > 39) {
+        turnHorizontally();
+        newColLocation = _location._col + (_colDirection * _stepsNumber);
+    }
+    setLocation(newRowLocation, newColLocation);
 }
 
 char Monkey::getInitial() const
 {
     return 'M';
+}
+
+void Monkey::setRandomDirections()
+{
+    int dir = rand() % 4;
+    switch (dir)
+    {
+    case(0):
+        _rowDirection = 0;
+        _colDirection = 1;
+        break;
+    case(1):
+        _rowDirection = 0;
+        _colDirection = -1;
+        break;
+    case(2):
+        _rowDirection = 1;
+        _colDirection = 0;
+        break;
+    case(3):
+        _rowDirection = -1;
+        _colDirection = 0;
+        break;
+    default:
+        break;
+    }
 }

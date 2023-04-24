@@ -18,13 +18,14 @@ void Zoo::run()
 		printList();
 		printMenue();
 		std::cin >> userInput;
+		std::cout << "you entered:  " << userInput << std::endl;
 		validCommand = true;
 		if (userInput == "stop")
 		{
+			std::cout << "enter the animal index:" << "\n";
 			std::cin >> index;
 			stop(index);
 			std::cout << "stoped" << "\n";
-
 		}
 		else if (userInput == "create")
 		{
@@ -34,22 +35,25 @@ void Zoo::run()
 			std::string animalName = "";
 			std::cin >> animalName;
 			create(strToAnimlaType(type), animalName);
-			std::cout << "created" << "\n";
+			std::cout << type << " created" << "\n";
 		}
 		else if (userInput == "move")
 		{
+			std::cout << "enter the animal index" << "\n";
 			std::cin >> index;
 			move(index);
 			std::cout << "moved" << "\n";
 		}
 		else if (userInput == "del")
 		{
+			std::cout << "enter the animal index" << "\n";
 			std::cin >> index;
 			del(index);
 			std::cout << "deleted" << "\n";
 		}
-		else if (userInput == "delall")
+		else if (userInput == "delAll")
 		{
+			std::cout << "enter the animal type" << "\n";
 			std::cin >> type;
 			delAll(strToAnimlaType(type));
 			std::cout << "all "<< type << " deleted" << "\n";
@@ -60,23 +64,20 @@ void Zoo::run()
 		}
 		// '.' means to advance turn, which happens anyway with every legal command
 		// so no action needs to be taken now.
-		else if (userInput == ".") {}
+		else if (userInput == ".") {
+		}
 		else
 		{
-			std::cout << "unsupported command\n";
 			validCommand = false;
+			std::cout << "unsupported command\n";
+			continue;
 		}
 		// Do not advance turn untill getting valid command
-		if (validCommand == false);
-		{
-			step();
-			printMap();
-			printList();
-			printMenue();
-		}
-		std::cin >> userInput;
-
-
+	
+		step();
+		//printMap();
+		//printList();
+		//printMenue();
 	}
 }
 
@@ -157,7 +158,7 @@ void Zoo::help()
 
 void Zoo::printMenue()
 {
-	std::string instructions = "please enter command\n";
+	std::string instructions = "COMMANDS:\n";
 	instructions += "1. stop \n";
 	instructions += "2. move \n";
 	instructions += "3. create \n";
@@ -171,7 +172,7 @@ void Zoo::printMenue()
 
 void Zoo::printMap()
 {
-	
+	std::cout<< "ZOO MAP:\n";
 	for (int row = 0; row < 20; ++row) {
 		for (int col = 0; col < 40; ++col) {
 			bool animalInCell = false;
@@ -201,6 +202,7 @@ void Zoo::printList()
 		animal->printDetails();
 		index++;
 	}
+	std::cout << "\n";
 }
 
 void Zoo::initZoo()
@@ -220,11 +222,7 @@ void Zoo::step()
 
 Location Zoo::randLocation()
 {
-	int r = rand() % 20;
-	if (r < 0) {
-		r = rand() % 20;
-	}
-	return Location(r, rand() % 40);
+	return Location(rand()%20, rand() % 40);
 }
 
 AnimalType Zoo::strToAnimlaType(std::string type)

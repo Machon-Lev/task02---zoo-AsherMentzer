@@ -10,4 +10,5 @@ public:
 private:
 	int _stepsCounter;
 	int _stepsNumber;
+	void setRandomDirections() override;
 };
