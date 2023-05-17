@@ -8,7 +8,7 @@ class Animal
 {
 public:
 	Animal(const std::string& name,const Location& location);
-	~Animal();
+	virtual ~Animal();
 	void printDetails()const;
 	virtual char getInitial() const = 0;
 	std::string getName() const;
