@@ -1,0 +1,38 @@
+#include "..\include\Shark.h"
+
+Shark::Shark(const std::string& name, const Location& location):Animal(name,location)
+{}
+
+Shark::~Shark()
+{
+}
+
+void Shark::step()
+{
+	if (!_moving) {
+		return;
+	}
+	int newRowLocation = _location._row + (_rowDirection * 5);
+	if (newRowLocation < 0 || newRowLocation > 19) {
+		turnVertically();	
+		newRowLocation = _location._row + (_rowDirection * 5);
+	}
+	int newColLocation = _location._col + (_colDirection * 5);
+	if(newColLocation < 0 || newColLocation > 39) {
+		turnHorizontally();
+		newColLocation = _location._col + (_colDirection * 5);
+	}
+	setLocation(newRowLocation, newColLocation);
+}
+
+char Shark::getInitial() const
+{
+	return 'S';
+}
+
+void Shark::move()
+{
+	_moving = true;
+	setRandomDirections();
+}
+
